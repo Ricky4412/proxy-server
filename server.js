@@ -1,5 +1,4 @@
 const express = require('express');
-const fetch = require('node-fetch');
 const cors = require('cors');
 
 const app = express();
@@ -10,6 +9,8 @@ app.get('/proxy', async (req, res) => {
   const url = decodeURIComponent(req.query.url);
 
   try {
+    // Dynamically import node-fetch
+    const fetch = (await import('node-fetch')).default;
     const response = await fetch(url);
     const data = await response.text();
     res.send(data);
